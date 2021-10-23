@@ -95,13 +95,13 @@ fi
 #  if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
 #fi
 
-colored_echo "Installing or upgrading atcom if it is required..."
+#colored_echo "Installing or upgrading atcom if it is required..."
 
-pip install -U atcom==0.3.1
-if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
+#pip install -U atcom==0.3.1
+#if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
 
-source ~/.profile
-if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
+#source ~/.profile
+#if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
 
 
 colored_echo "Copying setup files..."

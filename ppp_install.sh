@@ -81,7 +81,7 @@ esac
 colored_echo "Checking requirements..."
 
 colored_echo "Updating headers..."
-sudo apt-get update
+apk update
 
 colored_echo "Installing python3 if it is required..."
 if ! [ -x "$(command -v python3)" ]; then
@@ -97,7 +97,7 @@ fi
 
 colored_echo "Installing or upgrading atcom if it is required..."
 
-pip3 install -U atcom
+pip install -U atcom==0.3.1
 if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
 
 source ~/.profile
@@ -111,7 +111,7 @@ cp  $SOURCE_PATH/chat-disconnect chat-disconnect
 cp  $SOURCE_PATH/provider provider
 
 colored_echo "ppp and wiringpi (gpio tool) installing..."
-apt-get install ppp wiringpi -y
+apk add ppp wiringpi
 if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
 
 # test wiringpi and fix if there is any issue

@@ -118,7 +118,7 @@ if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
 gpio readall | grep Oops > /dev/null
 if [[ $? -ne 1 ]]; then 
 	colored_echo "Known wiringpi issue is detected! Wiringpi is updating..."
-	apk get wiringpi
+	apk add wiringpi
 fi
 
 colored_echo "What is your carrier APN?"

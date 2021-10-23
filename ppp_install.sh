@@ -45,7 +45,7 @@ function colored_echo
 if [[ -e $SIXFAB_PATH ]]; then
     colored_echo "Sixfab path already exist!" ${SET}
 else
-    sudo mkdir $SIXFAB_PATH
+    mkdir $SIXFAB_PATH
     colored_echo "Sixfab path is created." ${SET}
 fi
 
@@ -53,7 +53,7 @@ fi
 if [[ -e $PPP_PATH ]]; then
     colored_echo "PPP path already exist!" ${SET}
 else
-    sudo mkdir $PPP_PATH
+    mkdir $PPP_PATH
     colored_echo "PPP path is created." ${SET}
 fi
 
@@ -85,13 +85,13 @@ apk update
 
 colored_echo "Installing python3 if it is required..."
 if ! [ -x "$(command -v python3)" ]; then
-  sudo apt-get install python3 -y
+  apk add py3-pip 
   if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
 fi
 
 colored_echo "Installing pip3 if it is required..."
 if ! [ -x "$(command -v pip3)" ]; then
-  sudo apt-get install python3-pip -y
+  apk add py3-pip 
   if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
 fi
 
@@ -172,7 +172,7 @@ if grep -q "ttyUSB3" <<<"$devicename"; then
 	colored_echo "✔ If your ttyS0 (miniuart) port is enabled, press ENTER and continue to installation." ${SET}
 	colored_echo "✘ If not, please follow the instructions to enable ttyS0 interface on Raspberry Pi" ${SET}
 	echo -e "
-#	1. Start raspi-config: ${BLUE}sudo raspi-config${SET}.
+#	1. Start raspi-config: ${BLUE}su raspi-config${SET}.
 #	2. Select option 3 - ${BLUE}Interface Options${SET}.
 #	3. Select option P6 - ${BLUE}Serial Port${SET}.
 #	4. ${BLUE}At the prompt Would you like a login shell to be accessible over serial?${SET} answer ${BLUE}'No'${SET}

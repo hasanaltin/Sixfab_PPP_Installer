@@ -89,11 +89,11 @@ if ! [ -x "$(command -v python3)" ]; then
   if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
 fi
 
-colored_echo "Installing pip3 if it is required..."
-if ! [ -x "$(command -v pip3)" ]; then
-  apk add py3-pip 
-  if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
-fi
+#colored_echo "Installing pip3 if it is required..."
+#if ! [ -x "$(command -v pip3)" ]; then
+#  apk add py3-pip 
+#  if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
+#fi
 
 colored_echo "Installing or upgrading atcom if it is required..."
 
@@ -115,11 +115,11 @@ apk add ppp wiringpi
 if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
 
 # test wiringpi and fix if there is any issue
-gpio readall | grep Oops > /dev/null
-if [[ $? -ne 1 ]]; then 
-	colored_echo "Known wiringpi issue is detected! Wiringpi is updating..."
-	apk add wiringpi
-fi
+#gpio readall | grep Oops > /dev/null
+#if [[ $? -ne 1 ]]; then 
+#	colored_echo "Known wiringpi issue is detected! Wiringpi is updating..."
+#	apk add wiringpi
+#fi
 
 colored_echo "What is your carrier APN?"
 read carrierapn 

@@ -165,7 +165,7 @@ read devicename
 
 colored_echo "Your input is: $devicename" ${GREEN} 
 
-if grep -q "ttyUSB3" <<<"$devicename"; then
+if grep -q "ttyS0" <<<"$devicename"; then
 	colored_echo "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-" ${BLUE}
 	colored_echo "REMINDER!" ${BLUE}
 	colored_echo "- Disable serial console and enable miniuart to use ttyS0 as the serial interface." ${SET}

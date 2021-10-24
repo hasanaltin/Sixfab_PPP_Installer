@@ -120,7 +120,7 @@ if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
 #	apk add wiringpi
 #fi
 
-read -p "Press ENTER key to enable APN." carrierapn
+read -p "Press ENTER key to enable APN." ENTER
 carrierapn=${carrierapn:-internet}
 colored_echo "Your APN $carrierapn is activated." ${GREEN}
 
@@ -160,7 +160,7 @@ done
 
 
 
-read -p "Press ENTER key to enable communication port." devicename
+read -p "Press ENTER key to enable communication port." ENTER
 devicename=${devicename:-ttyUSB3}
 colored_echo "Your communication $devicename is activated." ${GREEN} 
 

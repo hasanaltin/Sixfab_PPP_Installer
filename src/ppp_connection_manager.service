@@ -1,13 +1,12 @@
-[Unit]
-Description=PPP Connection Manager
-After=network.target
+#!/sbin/openrc-run
 
-[Service]
-ExecStart=/bin/bash ppp_connection_manager.sh
-WorkingDirectory=/opt/sixfab/ppp_connection_manager
-StandardOutput=inherit
-StandardError=inherit
-Restart=always
+name=$RC_SVCNAME
+description="PPP Connection Manager"
+supervisor="supervise-daemon"
+command="/bin/bash"
+command_args="ppp_connection_manager.sh"
+supervise_daemon_args=" -d /opt/sixfab/ppp_connection_manager"
 
-[Install]
-WantedBy=multi-user.target
+depend() {
+	after net 
+}

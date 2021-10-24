@@ -290,7 +290,7 @@ do
 			  
 			  
 #			  systemctl daemon-reload
-			  rc-update add $SERVICE_NAME default
+			  rc-update add $SERVICE_NAME boot
 #			  chmod +x /opt/sixfab/$SERVICE_NAME			  
 			  break;;
 			  

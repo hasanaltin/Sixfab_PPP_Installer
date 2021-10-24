@@ -291,7 +291,7 @@ do
 			  
 #			  systemctl daemon-reload
 			  rc-update add $SERVICE_NAME default
-			  chmod +x /opt/sixfab/$SERVICE_NAME			  
+#			  chmod +x /opt/sixfab/$SERVICE_NAME			  
 			  break;;
 			  
 		[Nn]* )    echo -e "${YELLOW}To connect to internet run ${BLUE}\"sudo pon\"${YELLOW} and to disconnect run ${BLUE}\"sudo poff\" ${SET}"

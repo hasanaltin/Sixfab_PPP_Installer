@@ -295,7 +295,7 @@ do
 			  
 			  
 #			  systemctl daemon-reload
-			  rc-update add $SERVICE_NAME boot
+			  rc-update add $SERVICE_NAME default
 #			  chmod +x /opt/sixfab/$SERVICE_NAME			  
 			  break;;
 			  
@@ -308,3 +308,4 @@ done
 read -p "Press ENTER key to reboot" ENTER
 
 colored_echo "Rebooting..." ${GREEN}
+reboot

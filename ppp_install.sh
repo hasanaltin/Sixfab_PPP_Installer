@@ -313,4 +313,3 @@ done
 read -p "Press ENTER key to reboot" ENTER
 
 colored_echo "Rebooting..." ${GREEN}
-reboot

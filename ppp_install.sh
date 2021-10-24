@@ -63,7 +63,7 @@ colored_echo "2: 3G, 4G/LTE Base Shield"
 colored_echo "3: Cellular IoT App Shield"
 colored_echo "4: Cellular IoT HAT"
 colored_echo "5: Tracker HAT"
-colored_echo "6: 3G/4G Base HAT"
+colored_echo "6: 3G/4G Base HAT" ${GREEN}
 
 
 read shield_hat
@@ -77,30 +77,30 @@ case $shield_hat in
     *)    colored_echo "Wrong Selection, exiting" ${RED}; exit 1;
 esac
 
-#colored_echo "Checking requirements..."
+colored_echo "Checking requirements..."
 
-#colored_echo "Updating headers..."
-#apk update
+colored_echo "Updating headers..."
+apk update
 
-#colored_echo "Installing python3 if it is required..."
-#if ! [ -x "$(command -v python3)" ]; then
-#  apk add py3-pip 
-#  if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
-#fi
+colored_echo "Installing python3 if it is required..."
+if ! [ -x "$(command -v python3)" ]; then
+  apk add py3-pip 
+  if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
+fi
 
-#colored_echo "Installing pip3 if it is required..."
-#if ! [ -x "$(command -v pip3)" ]; then
-#  apk add py3-pip 
-#  if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
-#fi
+colored_echo "Installing pip3 if it is required..."
+if ! [ -x "$(command -v pip3)" ]; then
+  apk add py3-pip 
+  if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
+fi
 
 #colored_echo "Installing or upgrading atcom if it is required..."
 
-#pip install -U atcom==0.3.1
-#if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
+pip install -U atcom==0.3.1
+if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
 
-#source ~/.profile
-#if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
+source ~/.profile
+if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
 
 
 colored_echo "Copying setup files..."
@@ -109,9 +109,9 @@ cp  $SOURCE_PATH/chat-connect chat-connect
 cp  $SOURCE_PATH/chat-disconnect chat-disconnect
 cp  $SOURCE_PATH/provider provider
 
-#colored_echo "ppp and wiringpi (gpio tool) installing..."
-#apk add ppp wiringpi
-#if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
+colored_echo "ppp and wiringpi (gpio tool) installing..."
+apk add ppp wiringpi
+if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
 
 # test wiringpi and fix if there is any issue
 #gpio readall | grep Oops > /dev/null
@@ -291,7 +291,7 @@ do
 			  
 #			  systemctl daemon-reload
 			  rc-update add $SERVICE_NAME default
-chmod +x /opt/sixfab/$SERVICE_NAME			  
+			  chmod +x /opt/sixfab/$SERVICE_NAME			  
 			  break;;
 			  
 		[Nn]* )    echo -e "${YELLOW}To connect to internet run ${BLUE}\"sudo pon\"${YELLOW} and to disconnect run ${BLUE}\"sudo poff\" ${SET}"

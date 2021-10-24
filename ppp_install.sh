@@ -120,10 +120,9 @@ cp  $SOURCE_PATH/provider provider
 #	apk add wiringpi
 #fi
 
-colored_echo "What is your carrier APN?"
-read carrierapn 
-
-colored_echo "Your Input is : $carrierapn" ${GREEN} 
+read -p "Press Enter to enable APN." carrierapn
+carrierapn=${carrierapn:-internet}
+colored_echo "Your APN $carrierapn is activated." ${GREEN}
 
 while [ 1 ]
 do
@@ -161,10 +160,9 @@ done
 
 
 
-colored_echo "What is your device communication PORT? (ttyS0/ttyUSB3/etc.)"
-read devicename 
-
-colored_echo "Your input is: $devicename" ${GREEN} 
+read -p "Press Enter to enable communication port." devicename
+devicename=${devicename:-ttyUSB3}
+colored_echo "Your communication $devicename is activated." ${GREEN} 
 
 
 #if grep -q "ttyS0" <<<"$devicename"; then

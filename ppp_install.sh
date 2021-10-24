@@ -5,7 +5,6 @@
 SIXFAB_PATH="/opt/sixfab"
 PPP_PATH="/opt/sixfab/ppp_connection_manager"
 
-REPO_PATH="https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer"
 BRANCH=master
 SOURCE_PATH="./src"
 SCRIPT_PATH="./src/reconnect_scripts"
@@ -78,16 +77,16 @@ case $shield_hat in
     *)    colored_echo "Wrong Selection, exiting" ${RED}; exit 1;
 esac
 
-colored_echo "Checking requirements..."
+#colored_echo "Checking requirements..."
 
-colored_echo "Updating headers..."
-apk update
+#colored_echo "Updating headers..."
+#apk update
 
-colored_echo "Installing python3 if it is required..."
-if ! [ -x "$(command -v python3)" ]; then
-  apk add py3-pip 
-  if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
-fi
+#colored_echo "Installing python3 if it is required..."
+#if ! [ -x "$(command -v python3)" ]; then
+#  apk add py3-pip 
+#  if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
+#fi
 
 #colored_echo "Installing pip3 if it is required..."
 #if ! [ -x "$(command -v pip3)" ]; then
@@ -110,9 +109,9 @@ cp  $SOURCE_PATH/chat-connect chat-connect
 cp  $SOURCE_PATH/chat-disconnect chat-disconnect
 cp  $SOURCE_PATH/provider provider
 
-colored_echo "ppp and wiringpi (gpio tool) installing..."
-apk add ppp wiringpi
-if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
+#colored_echo "ppp and wiringpi (gpio tool) installing..."
+#apk add ppp wiringpi
+#if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
 
 # test wiringpi and fix if there is any issue
 #gpio readall | grep Oops > /dev/null
@@ -160,40 +159,42 @@ do
 	esac
 done
 
+
+
 colored_echo "What is your device communication PORT? (ttyS0/ttyUSB3/etc.)"
 read devicename 
 
 colored_echo "Your input is: $devicename" ${GREEN} 
 
 
-if grep -q "ttyS0" <<<"$devicename"; then
-	colored_echo "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-" ${BLUE}
-	colored_echo "REMINDER!" ${BLUE}
-	colored_echo "- Disable serial console and enable miniuart to use ttyS0 as the serial interface." ${SET}
-	colored_echo "✔ If your ttyS0 (miniuart) port is enabled, press ENTER and continue to installation." ${SET}
-	colored_echo "✘ If not, please follow the instructions to enable ttyS0 interface on Raspberry Pi" ${SET}
-	echo -e "
-	1. Start raspi-config: ${BLUE}sudo raspi-config${SET}.
-	2. Select option 3 - ${BLUE}Interface Options${SET}.
-	3. Select option P6 - ${BLUE}Serial Port${SET}.
-	4. ${BLUE}At the prompt Would you like a login shell to be accessible over serial?${SET} answer ${BLUE}'No'${SET}
-	5. ${BLUE}At the prompt Would you like the serial port hardware to be enabled?${SET} answer ${BLUE}'Yes'${SET}
-	6. Exit raspi-config and ${BLUE}reboot${SET} the Pi for changes to take effect.
-	"
-	colored_echo "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-" ${BLUE}
-	echo
-	echo -e "Press ${BLUE}ENTER${SET} key to continue to installation or press ${BLUE}CTRL^C${SET} to abort installation and enable ttyS0 serial interface."
-	read -p "" ENTER
+#if grep -q "ttyS0" <<<"$devicename"; then
+#	colored_echo "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-" ${BLUE}
+#	colored_echo "REMINDER!" ${BLUE}
+#	colored_echo "- Disable serial console and enable miniuart to use ttyS0 as the serial interface." ${SET}
+#	colored_echo "✔ If your ttyS0 (miniuart) port is enabled, press ENTER and continue to installation." ${SET}
+#	colored_echo "✘ If not, please follow the instructions to enable ttyS0 interface on Raspberry Pi" ${SET}
+#	echo -e "
+#	1. Start raspi-config: ${BLUE}sudo raspi-config${SET}.
+#	2. Select option 3 - ${BLUE}Interface Options${SET}.
+#	3. Select option P6 - ${BLUE}Serial Port${SET}.
+#	4. ${BLUE}At the prompt Would you like a login shell to be accessible over serial?${SET} answer ${BLUE}'No'${SET}
+#	5. ${BLUE}At the prompt Would you like the serial port hardware to be enabled?${SET} answer ${BLUE}'Yes'${SET}
+#	6. Exit raspi-config and ${BLUE}reboot${SET} the Pi for changes to take effect.
+#	"
+#	colored_echo "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-" ${BLUE}
+#	echo
+#	echo -e "Press ${BLUE}ENTER${SET} key to continue to installation or press ${BLUE}CTRL^C${SET} to abort installation and enable ttyS0 serial interface."
+#	read -p "" ENTER
 
-    colored_echo "Doing atcom configuration for ttyS0 serial..."
+#   colored_echo "Doing atcom configuration for ttyS0 serial..."
 	# create atcom config
-	echo port: "/dev/ttyS0" > configs.yml
-	mv configs.yml $PPP_PATH
-else
+#	echo port: "/dev/ttyS0" > configs.yml
+#	mv configs.yml $PPP_PATH
+#else
 	# delete atcom config
-	ls $PPP_PATH | grep configs.yml > /dev/null
-	if [[ $? -eq 0 ]]; then rm $PPP_PATH/configs.yml; fi
-fi
+#	ls $PPP_PATH | grep configs.yml > /dev/null
+#	if [[ $? -eq 0 ]]; then rm $PPP_PATH/configs.yml; fi
+#fi
 
 mkdir -p /etc/chatscripts
 
@@ -286,11 +287,13 @@ do
 			  mv configure_modem.sh $PPP_PATH
 			  mv $RECONNECT_SCRIPT_NAME $PPP_PATH
 			  mv $MANAGER_SCRIPT_NAME $PPP_PATH
-			  mv $SERVICE_NAME /etc/systemd/system/
+			  mv $SERVICE_NAME /etc/init.d/
+			  chmod +x /etc/init.d/$SERVICE_NAME
 			  
-			  systemctl daemon-reload
-			  systemctl enable $SERVICE_NAME
 			  
+#			  systemctl daemon-reload
+			  rc-update add $SERVICE_NAME default
+chmod +x /opt/sixfab/$SERVICE_NAME			  
 			  break;;
 			  
 		[Nn]* )    echo -e "${YELLOW}To connect to internet run ${BLUE}\"sudo pon\"${YELLOW} and to disconnect run ${BLUE}\"sudo poff\" ${SET}"
@@ -302,4 +305,3 @@ done
 read -p "Press ENTER key to reboot" ENTER
 
 colored_echo "Rebooting..." ${GREEN}
-reboot

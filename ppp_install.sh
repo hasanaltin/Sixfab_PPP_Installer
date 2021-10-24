@@ -164,16 +164,11 @@ read -p "Press ENTER key to enable communication port." ENTER
 devicename=${devicename:-ttyUSB3}
 colored_echo "Your communication $devicename is activated." ${GREEN} 
 
-if $devicename; then
-   colored_echo "Doing atcom configuration for ttyUSB3 serial..."
+
+colored_echo "Doing atcom configuration for ttyUSB3 serial..."
 	#create atcom config
 	echo port: "/dev/ttyUSB3" > configs.yml
 	mv configs.yml $PPP_PATH
-else
-	#delete atcom config
-	ls $PPP_PATH | grep configs.yml > /dev/null
-	if [[ $? -eq 0 ]]; then rm $PPP_PATH/configs.yml; fi
-fi
 
 #if grep -q "ttyS0" <<<"$devicename"; then
 #	colored_echo "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-" ${BLUE}

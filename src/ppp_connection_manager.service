@@ -1,6 +1,5 @@
 #!/sbin/openrc-run
 
-name=$RC_SVCNAME
 description="PPP Connection Manager"
 supervisor="supervise-daemon"
 command="/bin/bash"

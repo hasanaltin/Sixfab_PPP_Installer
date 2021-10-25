@@ -8,7 +8,7 @@ POWERKEY=${POWERKEY_PIN:-24}
 POWER_UP_REQUIRED=${POWERUP_FLAG:-1}
 
 # default arguments
-APN=${SIM_APN:-super}
+APN=${SIM_APN:-internet}
 
 # 1 : STATUS
 # 2 : POWERKEY 

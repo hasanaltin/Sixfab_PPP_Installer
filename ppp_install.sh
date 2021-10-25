@@ -5,6 +5,7 @@
 SIXFAB_PATH="/opt/sixfab"
 PPP_PATH="/opt/sixfab/ppp_connection_manager"
 
+REPO_PATH="https://raw.githubusercontent.com/sixfab/Sixfab_PPP_Installer"
 BRANCH=master
 SOURCE_PATH="./src"
 SCRIPT_PATH="./src/reconnect_scripts"
@@ -44,7 +45,7 @@ function colored_echo
 if [[ -e $SIXFAB_PATH ]]; then
     colored_echo "Sixfab path already exist!" ${SET}
 else
-    mkdir $SIXFAB_PATH
+    sudo mkdir $SIXFAB_PATH
     colored_echo "Sixfab path is created." ${SET}
 fi
 
@@ -52,7 +53,7 @@ fi
 if [[ -e $PPP_PATH ]]; then
     colored_echo "PPP path already exist!" ${SET}
 else
-    mkdir $PPP_PATH
+    sudo mkdir $PPP_PATH
     colored_echo "PPP path is created." ${SET}
 fi
 
@@ -63,7 +64,7 @@ colored_echo "2: 3G, 4G/LTE Base Shield"
 colored_echo "3: Cellular IoT App Shield"
 colored_echo "4: Cellular IoT HAT"
 colored_echo "5: Tracker HAT"
-colored_echo "6: 3G/4G Base HAT" ${GREEN}
+colored_echo "6: 3G/4G Base HAT"
 
 
 read shield_hat
@@ -84,7 +85,7 @@ apk update
 
 colored_echo "Installing python3 if it is required..."
 if ! [ -x "$(command -v python3)" ]; then
-  apk add py3-pip 
+  apk add py3-pip
   if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
 fi
 
@@ -94,9 +95,9 @@ if ! [ -x "$(command -v pip3)" ]; then
   if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
 fi
 
-#colored_echo "Installing or upgrading atcom if it is required..."
+colored_echo "Installing or upgrading atcom if it is required..."
 
-pip install -U atcom==0.3.1
+pip3 install -U atcom
 if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
 
 source ~/.profile
@@ -114,15 +115,16 @@ apk add ppp wiringpi
 if [[ $? -ne 0 ]]; then colored_echo "Process failed" ${RED}; exit 1; fi
 
 # test wiringpi and fix if there is any issue
-#gpio readall | grep Oops > /dev/null
-#if [[ $? -ne 1 ]]; then 
-#	colored_echo "Known wiringpi issue is detected! Wiringpi is updating..."
-#	apk add wiringpi
-#fi
+gpio readall | grep Oops > /dev/null
+if [[ $? -ne 1 ]]; then 
+	colored_echo "Known wiringpi issue is detected! Wiringpi is updating..."
+	apk add ppp wiringpi
+fi
 
-read -p "Press ENTER key to enable APN." ENTER
-carrierapn=${carrierapn:-internet}
-colored_echo "Your APN $carrierapn is activated." ${GREEN}
+colored_echo "What is your carrier APN?"
+read carrierapn 
+
+colored_echo "Your Input is : $carrierapn" ${GREEN} 
 
 while [ 1 ]
 do
@@ -158,17 +160,10 @@ do
 	esac
 done
 
+colored_echo "What is your device communication PORT? (ttyS0/ttyUSB3/etc.)"
+read devicename 
 
-
-read -p "Press ENTER key to enable communication port." ENTER
-devicename=${devicename:-ttyUSB3}
-colored_echo "Your communication $devicename is activated." ${GREEN} 
-
-
-colored_echo "Doing atcom configuration for ttyUSB3 serial..."
-	#create atcom config
-	echo port: "/dev/ttyUSB3" > configs.yml
-	mv configs.yml $PPP_PATH
+colored_echo "Your input is: $devicename" ${GREEN} 
 
 #if grep -q "ttyS0" <<<"$devicename"; then
 #	colored_echo "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-" ${BLUE}
@@ -189,12 +184,12 @@ colored_echo "Doing atcom configuration for ttyUSB3 serial..."
 #	echo -e "Press ${BLUE}ENTER${SET} key to continue to installation or press ${BLUE}CTRL^C${SET} to abort installation and enable ttyS0 serial interface."
 #	read -p "" ENTER
 
-#   colored_echo "Doing atcom configuration for ttyS0 serial..."
-# create atcom config
+ #   colored_echo "Doing atcom configuration for ttyS0 serial..."
+	# create atcom config
 #	echo port: "/dev/ttyS0" > configs.yml
 #	mv configs.yml $PPP_PATH
 #else
-# delete atcom config
+	# delete atcom config
 #	ls $PPP_PATH | grep configs.yml > /dev/null
 #	if [[ $? -eq 0 ]]; then rm $PPP_PATH/configs.yml; fi
 #fi
@@ -290,13 +285,11 @@ do
 			  mv configure_modem.sh $PPP_PATH
 			  mv $RECONNECT_SCRIPT_NAME $PPP_PATH
 			  mv $MANAGER_SCRIPT_NAME $PPP_PATH
-			  mv $SERVICE_NAME /etc/init.d/
+			  mv $SERVICE_NAME /etc/init.d/			  
 			  chmod +x /etc/init.d/$SERVICE_NAME
-			  
-			  
 #			  systemctl daemon-reload
 			  rc-update add $SERVICE_NAME default
-#			  chmod +x /opt/sixfab/$SERVICE_NAME			  
+			  
 			  break;;
 			  
 		[Nn]* )    echo -e "${YELLOW}To connect to internet run ${BLUE}\"sudo pon\"${YELLOW} and to disconnect run ${BLUE}\"sudo poff\" ${SET}"
@@ -308,4 +301,3 @@ done
 read -p "Press ENTER key to reboot" ENTER
 
 colored_echo "Rebooting..." ${GREEN}
-reboot
